@@ -9,7 +9,6 @@ const TodoHome = () => {
   const [pop, setPop] = useState(null);
   const [Taskid, setTaskid] = useState(null);
   const [trigger, setTrigger] = useState(false);
-  const [searchDropDown, setsearchDropDown] = useState(false);
 
   // insert data codes
   const insertData = {
@@ -111,6 +110,22 @@ const TodoHome = () => {
     }
   };
 
+  //search handle Logic
+
+  const [searchDropDown, setsearchDropDown] = useState(false);
+  const [searchData, setSearchData] = useState("");
+  const searchLogicHandle = (e) => {
+    const value = e.target.value;
+    setSearchData(value);
+    if (value === "") {
+      setsearchDropDown(false);
+    } else {
+      setsearchDropDown(true);
+    }
+  };
+
+  //useEffect rendering
+
   useEffect(() => {
     GetTasks();
   }, [trigger]);
@@ -129,7 +144,7 @@ const TodoHome = () => {
         insertTask,
       }}
     >
-      <div className="min-h-[100vh] bg-gray-200 overflow-hidden ">
+      <div className="min-h-[100vh] bg-gray-200 overflow-hidden">
         <div className="shadow-2xl m-5 mx-10 bg-red-50 flex flex-col h-full">
           <div>
             <div className="flex justify-center text-3xl my-4">
@@ -138,17 +153,28 @@ const TodoHome = () => {
             <div className="flex justify-between">
               <div className="w-[40%] relative">
                 <div>
+                  {/* search input */}
                   <input
                     type="text"
                     name=""
                     id=""
+                    value={searchData}
+                    onChange={searchLogicHandle}
                     placeholder="Search"
                     className="bg-white rounded-xl px-7 py-2  pr-10 my-4 mb-0 w-full ml-[60%] "
                   />
                 </div>
-                <div className="ml-[60%] bg-purple-200 w-full h-60 flex justify-center pt-3">
-                  hello
-                </div>
+
+                {/* search Dropdown */}
+                {searchDropDown ? (
+                  <div className="ml-[60%] bg-purple-200 w-full h-60 flex flex-col absolute">
+                    {todoTasks.map((info) => (
+                      <div className="bg-white border">{info.title}</div>
+                    ))}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
 
               <div className="mr-[20%]">

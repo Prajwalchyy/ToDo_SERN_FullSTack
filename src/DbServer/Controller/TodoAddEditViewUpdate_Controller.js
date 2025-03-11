@@ -16,6 +16,7 @@ export const InsertTask = (req, res) => {
     return res.send({ result, message: "task inserted successfully" });
   });
 };
+//api
 
 //fetch all tasks
 export const FetchTask = (req, res) => {
